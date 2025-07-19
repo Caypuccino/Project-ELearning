@@ -7,7 +7,7 @@ module.exports = [
     tanggalLahir: '2005-01-01',
     sudahLulus: false,
     skorKeseluruhan: 90,
-  },
+  }, //userData
   {
     id: 2,
     username: 'User Kedua',
