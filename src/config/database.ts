@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-export const connectDB = async () => {
+const connect = async () => {
   try {
     if (!DATABASE_URL) {
       throw new Error('Database URL not found');
@@ -15,3 +15,7 @@ export const connectDB = async () => {
     process.exit(1);
   }
 };
+
+connect();
+
+exports.connect = connect;
