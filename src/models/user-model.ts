@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface UserData extends Document {
@@ -19,13 +18,3 @@ const UserSchema: Schema = new Schema(
 );
 
 export const User = mongoose.model<UserData>('User', UserSchema);
-=======
-export interface UserData {
-  id: number;
-  username: string;
-  email: string;
-  tanggalLahir: Date;
-  sudahLulus: boolean;
-  skorKeseluruhan: number;
-}
->>>>>>> ac397e03f4a9300ee5ce23adcfb79a522ac33992

@@ -47,7 +47,19 @@ exports.getContentByCode = async (slug: string, code: string) => {
 };
 
 exports.addContent = async (slug: string, data: Content) => {
-  return await courseRepository.addContent(slug, data);
+    const existing = await Course.findOne({ 
+        slug, 
+        "contents.code": data.code.toUpperCase() 
+    });
+    
+    if (existing) {
+        throw new Error("Kode materi sudah digunakan di course ini");
+    }
+  
+    return await courseRepository.addContent(slug, {
+    ...data,
+    code: data.code.toUpperCase()
+  });
 };
 
 exports.updateContent = async (slug: string, code: string, data: Partial<Content>) => {

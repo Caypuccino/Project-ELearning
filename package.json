@@ -1,13 +1,7 @@
 {
-<<<<<<< HEAD
 	"name": "boilerplate-day-3",
 	"version": "1.0.0",
 	"description": "Backend boilerplate for KSM Cyber Backend Bootcamp day#3",
-=======
-	"name": "boilerplate-day-2",
-	"version": "1.0.0",
-	"description": "Backend boilerplate for KSM Cyber Backend Bootcamp day#2",
->>>>>>> ac397e03f4a9300ee5ce23adcfb79a522ac33992
 	"main": "src/server.ts",
 	"scripts": {
 		"dev": "nodemon",
@@ -15,15 +9,11 @@
 		"start": "node dist/server.js"
 	},
 	"dependencies": {
-<<<<<<< HEAD
 		"bcrypt": "^6.0.0",
 		"dotenv": "^17.2.0",
 		"express": "^5.1.0",
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.16.5"
-=======
-		"express": "^5.1.0"
->>>>>>> ac397e03f4a9300ee5ce23adcfb79a522ac33992
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.1",

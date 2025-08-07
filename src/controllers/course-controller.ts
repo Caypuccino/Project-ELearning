@@ -54,10 +54,10 @@ exports.show = async (req: Request, res: Response) => {
 
 // menambahkan kursus
 exports.create = async(req: Request, res: Response) => {
-  const data = req.body;
+  const {title, slug, description} = req.body;
   
   try {
-    const newCourse = await courseService.addCourses(data);
+    const newCourse = await courseService.addCourses({title, slug, description, contents: []});
     
     return res.status(200).json({
       statusCode: 200,
@@ -190,13 +190,6 @@ exports.createContent = async(req: Request, res: Response) => {
   const { slug } = req.params;
   const { code, title, url} = req.body;
   
-  if (!title?.trim() || !url?.trim()) {
-    return res.status(400).json({
-      statusCode: 400,
-      message: "code, title, dan url harus diisi"
-    });
-  }
-
   try {
     const newContent = await courseService.addContent(slug, {code, title, url});
     
@@ -252,14 +245,14 @@ exports.deleteContent = async(req: Request, res: Response) => {
     if(!existingContent){
       return res.status(404).json({
         statusCode: 404, 
-        message: 'Kursus tidak ditemukan',
+        message: 'Materi tidak ditemukan',
       });
     }
     
     const deletedContent = await courseService.deleteContent(slug, code);
     return res.status(200).json({
       statusCode: 200,
-      message: 'Berhasil menghapus kursus!',
+      message: 'Berhasil menghapus materi!',
       data: deletedContent,
     });
   } catch (error: any) {

@@ -11,7 +11,10 @@ exports.getCourseBySlug = async (slug: string) => {
 };
 
 exports.addCourses = async (data: Partial<CourseData>) => {
-    return await Course.create(data);
+    const courseData = {
+        ...data, contents: data.contents || []
+    };
+    return await Course.create(courseData);
 };
 
 exports.updateCourse = async (slug: string, data: Partial<CourseData>) => {
@@ -25,33 +28,33 @@ exports.deleteCourse = async (slug: string) => {
 //tugas
 
 exports.getAllContents = async (slug: string) => {
-    const course = await Course.findOne({ slug }).select('Contents').lean();
-    return course?.Contents.filter(content => content.title && content.url) || [];
+    const course = await Course.findOne({ slug }).select('contents').lean();
+    return course?.contents.filter(content => content.title && content.url) || [];
 };
 
 exports.getContentByCode = async (slug: string, code: string) => {
     const course = await Course.findOne({ 
-        slug, 'Contents.code': code.toUpperCase() 
+        slug, 'contents.code': code.toUpperCase() 
     },
-        {'Contents.$': 1} 
+        {'contents.$': 1} 
     );
-    return course?.Contents[0];; 
+    return course?.contents[0];; 
 };
 
 exports.addContent = async (slug: string, data: Content) => {
     data.code = data.code.toUpperCase();
     return await Course.findOneAndUpdate(
         { slug },
-        { $push: { Contents: data } },
-        { new: true, select: 'Contents' }
+        { $push: { contents: data } },
+        { new: true, select: 'contents' }
     );
 };
 
 exports.updateContent = async (slug: string, code: string, data: Partial<Content>) => {
     if (data.code) data.code = data.code.toUpperCase();
     return await Course.findOneAndUpdate(
-        { slug, 'Contents.code': code },
-        { $set: { 'Contents.$': data } },
+        { slug, 'contents.code': code },
+        { $set: { 'contents.$': data } },
         { new: true } 
     );
 };
@@ -59,7 +62,7 @@ exports.updateContent = async (slug: string, code: string, data: Partial<Content
 exports. deleteContent = async (slug: string, code: string) => {
     return await Course.findOneAndUpdate(
         { slug },
-        { $pull: { Contents: { code: code.toUpperCase() } } },
+        { $pull: { contents: { code: code.toUpperCase() } } },
         { new: true }
     );
 };

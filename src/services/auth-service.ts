@@ -37,17 +37,13 @@ exports.register = async (
   input.password = hashedPassword;
 
   // secara default, assign role menjadi 'student'
-  input.role = 'student';
+   const userData = {
+    ...input,
+    password: hashedPassword,
+    role: 'student'
+  };
 
-  // auto-increment id
-  const maxId = storedUsers.length > 0
-    ? Math.max(...storedUsers.map((user: UserData) => user.id))
-    : 0;
-  input.id = maxId + 1;
-
-  storedUsers.push(input);
-
-  return storedUsers[storedUsers.length - 1];
+  return userRepository.createUser(userData);
 };
 
 // otentikasi pengguna dengan memberikan token JWT

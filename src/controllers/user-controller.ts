@@ -1,30 +1,17 @@
 import { Request, Response } from 'express';
-<<<<<<< HEAD
 import { AuthenticatedRequest } from '../types/authenticated-request-type';
 
 const userService = require('../services/user-service');
 
 // mendapatkan list users
-=======
-
-const userService = require('../services/user-service');
-
->>>>>>> ac397e03f4a9300ee5ce23adcfb79a522ac33992
 exports.index = async (req: Request, res: Response) => {
   try {
     const userData = userService.getUsers();
 
-<<<<<<< HEAD
-    if (!userData || userData.length === 0) {
-      return res.status(404).json({
-        statusCode: 404,
-        message: 'Data user kosong!',
-=======
     if (!userData || userData.length === 0){
       return res.status(404).json({ 
         statusCode: 404,
         pesan : "Data user tidak ditemukan.",
->>>>>>> ac397e03f4a9300ee5ce23adcfb79a522ac33992
       });
     }
 
@@ -34,7 +21,6 @@ exports.index = async (req: Request, res: Response) => {
       data: userData,
     });
   } catch (error: any) {
-<<<<<<< HEAD
     console.error(error);
     return res.status(500).json({
       statusCode: 500,
@@ -106,10 +92,6 @@ exports.deleteById = async (req: AuthenticatedRequest, res: Response) => {
       statusCode: 500,
       message: 'Error internal server!',
     });
-=======
-    return res.status(500).json({ 
-      statusCode: 500,
-      pesan: 'Internal server error.' });
   }
 };
 
@@ -135,6 +117,5 @@ exports.store = async (req: Request, res: Response) => {
     return res.status(500).json({  
       statusCode: 500,
       pesan: 'Internal server error.' });
->>>>>>> ac397e03f4a9300ee5ce23adcfb79a522ac33992
   }
 };
