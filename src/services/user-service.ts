@@ -1,4 +1,5 @@
 import { UserData } from '../models/user-model';
+<<<<<<< HEAD
 const storedUsers = require('../data/user-data');
 
 // cari user berdasarkan id nya
@@ -41,3 +42,18 @@ exports.deleteUserById = (
 
   return undefined;
 };
+=======
+const userData = require('../data/users');
+
+exports.getUsers = (): UserData  => {
+  const data: UserData = userData;
+  return data || [];
+};
+
+// menambahkan user ke basis data
+exports.addUser = (data: UserData) => {
+  //kode untuk menambah data
+  
+  return data;
+}
+>>>>>>> ac397e03f4a9300ee5ce23adcfb79a522ac33992

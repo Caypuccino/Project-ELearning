@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 # Boilerplate Bootcamp Backend Day 5
 Contains the boilerplate code necessary during the 5th day's demonstration of
+=======
+# Boilerplate Bootcamp Backend Day 2
+Contains the boilerplate code necessary during the 2nd day's demonstration of
+>>>>>>> ac397e03f4a9300ee5ce23adcfb79a522ac33992
 the KSM Cyber: Backend Development Bootcamp 2025.
 
 ## Prerequisites (Local Machine)
