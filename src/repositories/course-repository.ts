@@ -1,4 +1,5 @@
-import { Course } from '../models/course-model';
+import { Course, Content } from '../models/course-model';
+// import knex from '../config/database/init';
 
 exports.getAllCourses = async (): Promise<Course[]> => {
   return await Course.query();
@@ -19,71 +20,49 @@ exports.updateCourse = async (slug: string, data: Partial<Course>): Promise<Cour
 exports.deleteCourse = async (slug: string): Promise<number> => {
   return await Course.query().delete().where('slug', slug);
 };
-// import model
-// import { Course, Content, CourseData} from '../models/course-model';
 
-// // definisikan operasi database
-// exports.getAllCourses = async () => {
-//     return await Course.find();   
-// };
+exports.getAllContents = async (slug: string): Promise<Content[]> => {
+  const course = await Course.query().findOne({ slug });
+  return course?.contents || [];
+};
 
-// exports.getCourseBySlug = async (slug: string) => {
-//     return await Course.find({ slug });   
-// };
+exports.getContentByCode = async (slug: string, code: string): Promise<Content | undefined> => {
+  const course = await Course.query().findOne({ slug })
+  return course?.contents?.find((c: Content) => c.code === code); 
+};
 
-// exports.addCourses = async (data: Partial<CourseData>) => {
-//     const courseData = {
-//         ...data, contents: data.contents || []
-//     };
-//     return await Course.create(courseData);
-// };
+exports.addContent = async (slug: string, data: Content): Promise<Content[] | undefined> => {
+  const course = await Course.query().findOne({ slug });
+  if (!course) return undefined;
 
-// exports.updateCourse = async (slug: string, data: Partial<CourseData>) => {
-//     return await Course.updateOne({ slug }, data);
-// };
+  const updatedContents = [...(course.contents || []), data];
+  const updatedCourse = await Course.query().patch({ contents: updatedContents }).where({ slug })
+    .returning('contents').first();
 
-// exports.deleteCourse = async (slug: string) => {
-//     return await Course.deleteOne({ slug });
-// };
+  return updatedCourse?.contents;
+};
 
-//tugas
+exports.updateContent = async (slug: string, code: string, data: Partial<Content>): Promise<Content[] | undefined> => {
+  const course = await Course.query().findOne({ slug });
+  if (!course) return undefined;
 
-// exports.getAllContents = async (slug: string) => {
-//     const course = await Course.findOne({ slug }).select('contents').lean();
-//     return course?.contents.filter(content => content.title && content.url) || [];
-// };
+  const updatedContents = (course.contents || []).map((item: Content) =>
+    item.code === code ? { ...item, ...data } : item
+  );
 
-// exports.getContentByCode = async (slug: string, code: string) => {
-//     const course = await Course.findOne({ 
-//         slug, 'contents.code': code.toUpperCase() 
-//     },
-//         {'contents.$': 1} 
-//     );
-//     return course?.contents[0];; 
-// };
+  const updatedCourse = await Course.query().patch({ contents: updatedContents }).where({ slug }).returning('contents').first();
 
-// exports.addContent = async (slug: string, data: Content) => {
-//     data.code = data.code.toUpperCase();
-//     return await Course.findOneAndUpdate(
-//         { slug },
-//         { $push: { contents: data } },
-//         { new: true, select: 'contents' }
-//     );
-// };
+  return updatedCourse?.contents;
+};
 
-// exports.updateContent = async (slug: string, code: string, data: Partial<Content>) => {
-//     if (data.code) data.code = data.code.toUpperCase();
-//     return await Course.findOneAndUpdate(
-//         { slug, 'contents.code': code },
-//         { $set: { 'contents.$': data } },
-//         { new: true } 
-//     );
-// };
+exports.deleteContent = async (slug: string, code: string): Promise<Content[] | undefined> => {
+  const course = await Course.query().findOne({ slug });
+  if (!course) return undefined;
 
-// exports. deleteContent = async (slug: string, code: string) => {
-//     return await Course.findOneAndUpdate(
-//         { slug },
-//         { $pull: { contents: { code: code.toUpperCase() } } },
-//         { new: true }
-//     );
-// };
+  const filteredContents = (course.contents || []).filter((item: Content) => item.code !== code);
+
+  const updatedCourse = await Course.query().patch({ contents: filteredContents }).where({ slug })
+    .returning('contents').first();
+
+  return updatedCourse?.contents;
+};

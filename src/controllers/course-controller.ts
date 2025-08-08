@@ -144,9 +144,9 @@ exports.showContents = async(req: Request, res: Response) => {
     const contents = await courseService.getAllContents(slug);
     
     if (contents.length === 0) {
-      return res.status(200).json({
-        statusCode: 200,
-        message: 'Course ditemukan tapi belum ada materi',
+      return res.status(404).json({
+        statusCode: 404,
+        message: 'Materi tidak ditemukan!',
         data: []
       });
     }
@@ -271,7 +271,6 @@ exports.deleteContent = async(req: Request, res: Response) => {
   }
   
 };
-
 
 // // mendapatkan list kursus yang diikuti pengguna
 // exports.enrolledCourses = async (req: AuthenticatedRequest, res: Response) => {

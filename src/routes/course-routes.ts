@@ -17,7 +17,13 @@ router.get('/', courseController.index);
 // GET /api/courses/{slug}
 router.get('/:slug', courseController.show);
 
-// auth guard untuk operasi CUD
+// GET all Contents (/api/courses/{slug}/Content)
+router.get('/:slug/content', courseController.showContents);
+
+// GET Content by Code (/api/courses/{slug}/Content)
+router.get('/:slug/content/:code', courseController.showContentByCode);
+
+// auth guard untuk operasi CUD (operasi setelah ini didefinisi)
 router.use(authenticationMiddleware, onlyAdminMiddleware);
 
 // POST /api/courses
@@ -28,13 +34,6 @@ router.patch('/:slug', courseController.update);
 
 // DELETE /api/courses/{slug}
 router.delete('/:slug', courseController.destroy);
-
-// tugas
-// GET all Contents (/api/courses/{slug}/Content)
-router.get('/:slug/content', courseController.showContents);
-
-// GET Content by Code (/api/courses/{slug}/Content)
-router.get('/:slug/content/:code', courseController.showContentByCode);
 
 // POST Content (/api/courses/{slug}/Content)
 router.post('/:slug/content', courseController.createContent);

@@ -8,15 +8,14 @@ const userController = require('../controllers/user-controller');
 // GET /api/users
 router.get('/', userController.index);
 
-// // GET /api/users/students
-// router.get(
-//   '/',
-//   // '/students',
-//   // // onlyRole('students'),
-//   // authenticationMiddleware,
-//   // // onlyStudentMiddleware,
-//   userController.index,
-// );
+// GET /api/users/students
+router.get(
+  '/students',
+  // onlyRole('students'),
+  authenticationMiddleware,
+  onlyStudentMiddleware,
+  userController.index,
+);
 
 // POST /api/users
 router.post('/', userController.create);
@@ -27,9 +26,11 @@ router.get('/:id', userController.findById);
 // GET /api/users/email/:email
 router.get('/email/:email', userController.findByEmail);
 
-// PATCH /api/users
-router.patch('/:id', 
+// PATCH /api/users 
+router.patch
+('/:id', 
   authenticationMiddleware, 
+  onlyStudentMiddleware,
   userController.update);
 
 // DELETE /api/users/:id -> hanya boleh oleh ADMIN
