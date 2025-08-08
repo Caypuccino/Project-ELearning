@@ -1,7 +1,7 @@
 import { User } from '../models/user-model';
 
 exports.findUserByEmail = async (email: string): Promise<User | undefined> => {
-  return await User.query().findOne({ email: email.toLowerCase() });
+  return await User.query().findOne({ email });
 };
 
 exports.createUser = async (input: Partial<User>): Promise<User> => {

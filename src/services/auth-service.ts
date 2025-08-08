@@ -15,7 +15,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'rahasia';
 const findUserByEmail = async (
   email: string,
 ): Promise<User | undefined> => {
-  return await userRepository.findByEmail(email);
+  return await userRepository.findUserByEmail(email);
 };
 
 /**

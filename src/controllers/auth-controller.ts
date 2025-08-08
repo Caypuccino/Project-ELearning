@@ -6,8 +6,7 @@ const authService = require('../services/auth-service');
 exports.register = async (req: Request, res: Response) => {
   const input = req.body;
   const requiredFields: string[] = [
-    'email', 'password', 'name', 'tanggalLahir',
-    'sudahLulus', 'skorKeseluruhan',
+    'email', 'password', 'name',
   ];
 
   try {
