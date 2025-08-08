@@ -4,11 +4,12 @@ export class User extends Model {
   static softDelete = true;
   static tableName = 'users';
 
-  id?: number;
+  id!: number;
   name!: string;
   email!: string;
   password!: string;
   role!: string;
+  image!: string;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
