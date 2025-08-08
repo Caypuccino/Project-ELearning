@@ -2,6 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
+const path = require('path');
 
 const apiRoutes = require('./routes');
 
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // handle seluruh request /api/* ke route API
 app.use('/api', apiRoutes);
+// read
+app.use('/public', express.static(path.join(__dirname, '../public')));
 
 // event loop
 app.listen(PORT, () => {

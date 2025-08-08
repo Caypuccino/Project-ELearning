@@ -33,13 +33,14 @@ exports.addCourse = async (data: Partial<Course>) => {
 
 // mengubah kursus
 exports.updateCourse = async (existingCourse: Course, data: Partial<Course>) => {
-  if (data.files) {
+  if (data.files && data.files.length > 0) {
     const image = data.files.filter((file: any) => file.fieldname === 'image');
   
     const imagePath = await filesystem.update(existingCourse.image, image[0], 'courses');
     data.image = imagePath;
-    delete data.files;
   }
+  
+  delete data.files;
 
   return await courseRepository.updateCourse(existingCourse.slug, data);
 };

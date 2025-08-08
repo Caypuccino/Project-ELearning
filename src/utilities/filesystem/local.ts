@@ -63,7 +63,7 @@ const remove = async (
 const update = async (
   oldFilePath: string,
   newFile: Express.Multer.File,
-  directory: string,
+  directory: string = '',
 ): Promise<any> => {
   try {
     await remove(oldFilePath);
