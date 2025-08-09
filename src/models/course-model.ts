@@ -15,7 +15,7 @@ export class Course extends Model {
   slug!: string;
   description!: string;
   image!: string;
-  contents!: Content[];
+  contents?: Content[];
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
