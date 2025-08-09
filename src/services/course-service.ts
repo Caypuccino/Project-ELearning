@@ -28,6 +28,10 @@ exports.addCourse = async (data: Partial<Course>) => {
   data.image = imagePath;
   delete data.files;
 
+  if (!data.contents) {
+    data.contents = [];
+  }
+
   return await courseRepository.addCourse(data);
 };
 
