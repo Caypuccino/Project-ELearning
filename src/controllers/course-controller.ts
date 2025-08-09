@@ -57,6 +57,7 @@ exports.create = async (req: Request, res: Response) => {
   const data = req.body;
   const files: any = req.files;
   data.files = files;
+  data.contents = data.contents || [];
 
   try {
     const newCourse = await courseService.addCourse(data);
