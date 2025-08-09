@@ -1,4 +1,4 @@
-import { Course, Content } from '../models/course-model';
+import { Course } from '../models/course-model';
 
 const courseRepository = require('../repositories/course-repository');
 const filesystem = require('../utilities/filesystem');
@@ -28,9 +28,9 @@ exports.addCourse = async (data: Partial<Course>) => {
   data.image = imagePath;
   delete data.files;
 
-  if (!data.contents) {
-    data.contents = [];
-  }
+  // if (!data.contents) {
+  //   data.contents = [];
+  // }
 
   return await courseRepository.addCourse(data);
 };
@@ -57,31 +57,31 @@ exports.deleteCourse = async (existingCourse: Course) => {
 }
 
 //tugas
-exports.getAllContents = async (slug: string) => {
-  return await courseRepository.getAllContents(slug);
-};
+// exports.getAllContents = async (slug: string) => {
+//   return await courseRepository.getAllContents(slug);
+// };
 
-exports.getContentByCode = async (slug: string, code: string) => {
-  const content = await courseRepository.getContentByCode(slug, code);
+// exports.getContentByCode = async (slug: string, code: string) => {
+//   const content = await courseRepository.getContentByCode(slug, code);
 
-  return content || null;
-};
+//   return content || null;
+// };
 
-exports.addContent = async (slug: string, data: Content) => {
-  const existingContent = await courseRepository.getContentByCode(slug, data.code);
+// exports.addContent = async (slug: string, data: Content) => {
+//   const existingContent = await courseRepository.getContentByCode(slug, data.code);
     
-  if (existingContent) {
-    console.log("Materi sudah tersedia di course ini");
-    return null;
-  }
+//   if (existingContent) {
+//     console.log("Materi sudah tersedia di course ini");
+//     return null;
+//   }
   
-  return await courseRepository.addContent(slug, data);
-};
+//   return await courseRepository.addContent(slug, data);
+// };
 
-exports.updateContent = async (slug: string, code: string, data: Partial<Content>) => {
-  return await courseRepository.updateContent(slug, code, data);
-};
+// exports.updateContent = async (slug: string, code: string, data: Partial<Content>) => {
+//   return await courseRepository.updateContent(slug, code, data);
+// };
 
-exports. deleteContent = async (slug: string, code: string) => {
-  return await courseRepository.deleteContent(slug, code);
-};
+// exports. deleteContent = async (slug: string, code: string) => {
+//   return await courseRepository.deleteContent(slug, code);
+// };

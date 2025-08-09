@@ -1,5 +1,4 @@
-import { Course, Content } from '../models/course-model';
-// import knex from '../config/database/init';
+import { Course } from '../models/course-model';
 
 exports.getAllCourses = async (): Promise<Course[]> => {
   return await Course.query();
@@ -21,48 +20,48 @@ exports.deleteCourse = async (slug: string): Promise<number> => {
   return await Course.query().delete().where('slug', slug);
 };
 
-exports.getAllContents = async (slug: string): Promise<Content[]> => {
-  const course = await Course.query().findOne({ slug });
-  return course?.contents || [];
-};
+// exports.getAllContents = async (slug: string): Promise<Content[]> => {
+//   const course = await Course.query().findOne({ slug });
+//   return course?.contents || [];
+// };
 
-exports.getContentByCode = async (slug: string, code: string): Promise<Content | undefined> => {
-  const course = await Course.query().findOne({ slug })
-  return course?.contents?.find((c: Content) => c.code === code); 
-};
+// exports.getContentByCode = async (slug: string, code: string): Promise<Content | undefined> => {
+//   const course = await Course.query().findOne({ slug })
+//   return course?.contents?.find((c: Content) => c.code === code); 
+// };
 
-exports.addContent = async (slug: string, data: Content): Promise<Content[] | undefined> => {
-  const course = await Course.query().findOne({ slug });
-  if (!course) return undefined;
+// exports.addContent = async (slug: string, data: Content): Promise<Content[] | undefined> => {
+//   const course = await Course.query().findOne({ slug });
+//   if (!course) return undefined;
 
-  const updatedContents = [...(course.contents || []), data];
-  const updatedCourse = await Course.query().patch({ contents: updatedContents }).where({ slug })
-    .returning('contents').first();
+//   const updatedContents = [...(course.contents || []), data];
+//   const updatedCourse = await Course.query().patch({ contents: updatedContents }).where({ slug })
+//     .returning('contents').first();
 
-  return updatedCourse?.contents;
-};
+//   return updatedCourse?.contents;
+// };
 
-exports.updateContent = async (slug: string, code: string, data: Partial<Content>): Promise<Content[] | undefined> => {
-  const course = await Course.query().findOne({ slug });
-  if (!course) return undefined;
+// exports.updateContent = async (slug: string, code: string, data: Partial<Content>): Promise<Content[] | undefined> => {
+//   const course = await Course.query().findOne({ slug });
+//   if (!course) return undefined;
 
-  const updatedContents = (course.contents || []).map((item: Content) =>
-    item.code === code ? { ...item, ...data } : item
-  );
+//   const updatedContents = (course.contents || []).map((item: Content) =>
+//     item.code === code ? { ...item, ...data } : item
+//   );
 
-  const updatedCourse = await Course.query().patch({ contents: updatedContents }).where({ slug }).returning('contents').first();
+//   const updatedCourse = await Course.query().patch({ contents: updatedContents }).where({ slug }).returning('contents').first();
 
-  return updatedCourse?.contents;
-};
+//   return updatedCourse?.contents;
+// };
 
-exports.deleteContent = async (slug: string, code: string): Promise<Content[] | undefined> => {
-  const course = await Course.query().findOne({ slug });
-  if (!course) return undefined;
+// exports.deleteContent = async (slug: string, code: string): Promise<Content[] | undefined> => {
+//   const course = await Course.query().findOne({ slug });
+//   if (!course) return undefined;
 
-  const filteredContents = (course.contents || []).filter((item: Content) => item.code !== code);
+//   const filteredContents = (course.contents || []).filter((item: Content) => item.code !== code);
 
-  const updatedCourse = await Course.query().patch({ contents: filteredContents }).where({ slug })
-    .returning('contents').first();
+//   const updatedCourse = await Course.query().patch({ contents: filteredContents }).where({ slug })
+//     .returning('contents').first();
 
-  return updatedCourse?.contents;
-};
+//   return updatedCourse?.contents;
+// };

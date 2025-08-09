@@ -1,10 +1,10 @@
 const Model = require('../config/database/orm');
 
-export interface Content{
-  code: string;    
-  title: string;   
-  source: string;
-}
+// export interface Content{
+//   code: string;    
+//   title: string;   
+//   source: string;
+// }
 
 export class Course extends Model {
   static softDelete = true;
@@ -15,7 +15,7 @@ export class Course extends Model {
   slug!: string;
   description!: string;
   image!: string;
-  contents?: Content[] = [];
+  // contents?: Content[] = [];
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;

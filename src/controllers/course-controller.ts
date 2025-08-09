@@ -57,7 +57,6 @@ exports.create = async (req: Request, res: Response) => {
   const data = req.body;
   const files: any = req.files;
   data.files = files;
-  data.contents = data.contents || [];
 
   try {
     const newCourse = await courseService.addCourse(data);
@@ -139,139 +138,139 @@ exports.destroy = async (req: Request, res: Response) => {
 };
 
 //tugas p5
-exports.showContents = async(req: Request, res: Response) => {
-  const { slug } = req.params;
-  try {
-    const contents = await courseService.getAllContents(slug);
+// exports.showContents = async(req: Request, res: Response) => {
+//   const { slug } = req.params;
+//   try {
+//     const contents = await courseService.getAllContents(slug);
     
-    if (contents.length === 0) {
-      return res.status(404).json({
-        statusCode: 404,
-        message: 'Materi tidak ditemukan!',
-        data: []
-      });
-    }
+//     if (contents.length === 0) {
+//       return res.status(404).json({
+//         statusCode: 404,
+//         message: 'Materi tidak ditemukan!',
+//         data: []
+//       });
+//     }
     
-    res.status(200).json({
-      statusCode: 200,
-      message: 'Berhasil mendapatkan data materi!',
-      data: contents
-    });
-  } catch (error: any) {
-    console.error(error);
-    return res.status(500).json({
-      statusCode: 500,
-      message: 'Error internal server!',
-    });
-  }
-};
+//     res.status(200).json({
+//       statusCode: 200,
+//       message: 'Berhasil mendapatkan data materi!',
+//       data: contents
+//     });
+//   } catch (error: any) {
+//     console.error(error);
+//     return res.status(500).json({
+//       statusCode: 500,
+//       message: 'Error internal server!',
+//     });
+//   }
+// };
 
-exports.showContentByCode = async(req: Request, res: Response) => {
-  const { slug, code } = req.params;
+// exports.showContentByCode = async(req: Request, res: Response) => {
+//   const { slug, code } = req.params;
   
-  try {
-    const Content = await courseService.getContentByCode(slug, code);
+//   try {
+//     const Content = await courseService.getContentByCode(slug, code);
     
-    if(!Content){
-      return res.status(404).json({
-        statusCode: 404, 
-        message: 'Materi tidak ditemukan',
-      });
-    }
+//     if(!Content){
+//       return res.status(404).json({
+//         statusCode: 404, 
+//         message: 'Materi tidak ditemukan',
+//       });
+//     }
     
-    return res.status(200).json({
-      statusCode: 200,
-      message: 'Berhasil mendapatkan data Materi!',
-      data: Content,
-    });
-  } catch (error: any) {
-    console.error(error);
-    return res.status(500).json({
-      statusCode: 500,
-      message: 'Error internal server!',
-    });
-  }
+//     return res.status(200).json({
+//       statusCode: 200,
+//       message: 'Berhasil mendapatkan data Materi!',
+//       data: Content,
+//     });
+//   } catch (error: any) {
+//     console.error(error);
+//     return res.status(500).json({
+//       statusCode: 500,
+//       message: 'Error internal server!',
+//     });
+//   }
   
-};
+// };
 
-exports.createContent = async(req: Request, res: Response) => {
-  const { slug } = req.params;
-  const { code, title, url} = req.body;
+// exports.createContent = async(req: Request, res: Response) => {
+//   const { slug } = req.params;
+//   const { code, title, url} = req.body;
   
-  try {
-    const newContent = await courseService.addContent(slug, {code, title, url});
+//   try {
+//     const newContent = await courseService.addContent(slug, {code, title, url});
     
-    return res.status(200).json({
-      statusCode: 200,
-      message: 'Berhasil menambahkan materi baru!',
-      data: newContent,
-    });
-  } catch (error: any) {
-    console.error(error);
-    return res.status(500).json({
-      statusCode: 500,
-      message: 'Error internal server!',
-    });
-  }
+//     return res.status(200).json({
+//       statusCode: 200,
+//       message: 'Berhasil menambahkan materi baru!',
+//       data: newContent,
+//     });
+//   } catch (error: any) {
+//     console.error(error);
+//     return res.status(500).json({
+//       statusCode: 500,
+//       message: 'Error internal server!',
+//     });
+//   }
   
-};
+// };
 
-exports.updateContent = async(req: Request, res: Response) => {
-  const { slug, code } = req.params;
-  const data = req.body;
+// exports.updateContent = async(req: Request, res: Response) => {
+//   const { slug, code } = req.params;
+//   const data = req.body;
   
-  try {
-    const existingContent = await courseService.getContentByCode(slug, code);
-    if(!existingContent){
-      return res.status(404).json({
-        statusCode: 404, 
-        message: 'Materi tidak ditemukan',
-      });
-    }
+//   try {
+//     const existingContent = await courseService.getContentByCode(slug, code);
+//     if(!existingContent){
+//       return res.status(404).json({
+//         statusCode: 404, 
+//         message: 'Materi tidak ditemukan',
+//       });
+//     }
     
-    const updatedContent = await courseService.updateContent(slug, code, data);
-    return res.status(200).json({
-      statusCode: 200,
-      message: 'Berhasil mengubah data materi!',
-      data: updatedContent,
-    });
-  } catch (error: any) {
-    console.error(error);
-    return res.status(500).json({
-      statusCode: 500,
-      message: 'Error internal server!',
-    });
-  }
+//     const updatedContent = await courseService.updateContent(slug, code, data);
+//     return res.status(200).json({
+//       statusCode: 200,
+//       message: 'Berhasil mengubah data materi!',
+//       data: updatedContent,
+//     });
+//   } catch (error: any) {
+//     console.error(error);
+//     return res.status(500).json({
+//       statusCode: 500,
+//       message: 'Error internal server!',
+//     });
+//   }
   
-};
+// };
 
-exports.deleteContent = async(req: Request, res: Response) => {
-  const { slug, code } = req.params;
+// exports.deleteContent = async(req: Request, res: Response) => {
+//   const { slug, code } = req.params;
 
-  try {
-    const existingContent = await courseService.getCourseBySlug(slug, code);
-    if(!existingContent){
-      return res.status(404).json({
-        statusCode: 404, 
-        message: 'Materi tidak ditemukan',
-      });
-    }
+//   try {
+//     const existingContent = await courseService.getCourseBySlug(slug, code);
+//     if(!existingContent){
+//       return res.status(404).json({
+//         statusCode: 404, 
+//         message: 'Materi tidak ditemukan',
+//       });
+//     }
     
-    const deletedContent = await courseService.deleteContent(slug, code);
-    return res.status(200).json({
-      statusCode: 200,
-      message: 'Berhasil menghapus materi!',
-      data: deletedContent,
-    });
-  } catch (error: any) {
-    console.error(error);
-    return res.status(500).json({
-      statusCode: 500,
-      message: 'Error internal server!',
-    });
-  }
+//     const deletedContent = await courseService.deleteContent(slug, code);
+//     return res.status(200).json({
+//       statusCode: 200,
+//       message: 'Berhasil menghapus materi!',
+//       data: deletedContent,
+//     });
+//   } catch (error: any) {
+//     console.error(error);
+//     return res.status(500).json({
+//       statusCode: 500,
+//       message: 'Error internal server!',
+//     });
+//   }
   
-};
+// };
 
 // // mendapatkan list kursus yang diikuti pengguna
 // exports.enrolledCourses = async (req: AuthenticatedRequest, res: Response) => {
