@@ -10,7 +10,7 @@ export class Course extends Model {
   static softDelete = true;
   static tableName = 'courses';
 
-  id!: number;
+  id?: number;
   title!: string;
   slug!: string;
   description!: string;

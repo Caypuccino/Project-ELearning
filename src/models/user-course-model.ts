@@ -6,7 +6,7 @@ const Model = require('../config/database/orm');
 export class UserCourse extends Model {
   static tableName = 'user_courses';
 
-  id!: number;
+  id?: number;
   user_id!: number;
   course_id!: number;
   enrolled_at!: Date;
